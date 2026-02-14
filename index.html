@@ -1,180 +1,164 @@
 <!doctype html>
-<html lang="tr">
+<html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Valentine? 💗</title>
-  <style>
-    :root{
-      --bg1:#fff0f6; --pink:#ff4d6d; --text:#2b2b2b; --muted:#444;
-      --card: rgba(255,255,255,.78);
-    }
-    *{ box-sizing:border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
-    body{
-      margin:0; min-height:100vh; display:grid; place-items:center; overflow:hidden;
-      background:
-        radial-gradient(circle at 20% 20%, #ffe3ec, transparent 45%),
-        radial-gradient(circle at 80% 30%, #ffd6e7, transparent 45%),
-        radial-gradient(circle at 40% 80%, #ffdeeb, transparent 45%),
-        var(--bg1);
-    }
-    .wrap{ width:min(760px, 94vw); padding: 18px; }
-    .card{
-      border-radius: 26px; background: var(--card);
-      border:1px solid rgba(255,255,255,.9);
-      box-shadow: 0 18px 46px rgba(0,0,0,.10);
-      backdrop-filter: blur(10px);
-      padding: 26px 22px;
-      position:relative; overflow:hidden;
-      text-align:center;
-    }
-    h1{ margin: 6px 0 6px; font-size: clamp(28px, 4vw, 40px); color:var(--text); }
-    p{ margin: 0 0 16px; color:var(--muted); line-height:1.35; }
-    .btns{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top: 6px; }
-    button{
-      border:0; padding: 14px 18px; border-radius: 16px;
-      font-weight: 800; font-size: 16px; cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease;
-      user-select:none;
-    }
-    #yes{
-      background: var(--pink); color:white;
-      box-shadow: 0 12px 26px rgba(255,77,109,.35);
-    }
-    #yes:hover{ transform: translateY(-2px); }
-    #no{
-      background:#f1f3f5; color:#222;
-      box-shadow: 0 12px 26px rgba(0,0,0,.08);
-      position: relative;
-    }
-    .hint{ font-size: 12.5px; color:#666; margin-top: 12px; }
-    .result{
-      margin-top: 14px; font-size: 22px; font-weight: 900;
-      color:#d6336c; display:none;
-    }
-    .subresult{ margin-top: 8px; color:#444; display:none; }
-    .footer{ margin-top: 12px; font-size: 12.5px; color:#666; }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>San Valentín 💗</title>
 
-    .heart{
-      position:absolute; bottom:-30px; left: var(--x);
-      font-size: var(--s); opacity:0;
-      animation: floatUp var(--t) linear forwards;
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.14));
-      pointer-events:none;
-    }
-    @keyframes floatUp{
-      0%{ transform: translateY(0) scale(.9); opacity: 0; }
-      10%{ opacity: .95; }
-      100%{ transform: translateY(-120vh) scale(1.2); opacity: 0; }
-    }
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family: system-ui, -apple-system, sans-serif;
+  background:
+    radial-gradient(circle at 20% 20%, #ffe3ec, transparent 45%),
+    radial-gradient(circle at 80% 30%, #ffd6e7, transparent 45%),
+    radial-gradient(circle at 40% 80%, #ffdeeb, transparent 45%),
+    #fff0f6;
+  overflow:hidden;
+}
 
-    .secret{
-      margin-top: 16px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono";
-      font-size: 12.5px;
-      color:#555;
-      background: rgba(0,0,0,.03);
-      border: 1px dashed rgba(0,0,0,.10);
-      border-radius: 14px;
-      padding: 12px 14px;
-      display:none;
-      text-align:left;
-      white-space: pre-wrap;
-    }
-  </style>
+.card{
+  background:white;
+  padding:30px;
+  border-radius:25px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.1);
+  text-align:center;
+  position:relative;
+  max-width:500px;
+}
+
+h1{
+  margin-bottom:10px;
+  font-size:32px;
+}
+
+p{
+  margin-bottom:20px;
+  color:#444;
+}
+
+button{
+  padding:14px 22px;
+  margin:8px;
+  border:none;
+  border-radius:15px;
+  font-weight:bold;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+#yes{
+  background:#ff4d6d;
+  color:white;
+}
+
+#no{
+  background:#f1f3f5;
+}
+
+.result{
+  margin-top:20px;
+  font-weight:bold;
+  font-size:20px;
+  color:#d6336c;
+  display:none;
+}
+
+.secret{
+  margin-top:15px;
+  font-size:12px;
+  font-family:monospace;
+  color:#666;
+  display:none;
+  text-align:left;
+  background:#f8f9fa;
+  padding:10px;
+  border-radius:10px;
+}
+
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation:float 3s linear forwards;
+}
+
+@keyframes float{
+  from{ transform:translateY(0); opacity:1;}
+  to{ transform:translateY(-500px); opacity:0;}
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="card" id="card">
-      <h1><span id="partnerName">Max</span>, sevgilim olur musun? 💗</h1>
-      <p>Uyarı: “Hayır” seçeneği beklenmedik fizik kurallarına tabidir.</p>
 
-      <div class="btns" id="btns">
-        <button id="yes">Evet 🥰</button>
-        <button id="no">Hayır 🙃</button>
-      </div>
+<div class="card" id="card">
+  <h1>Max, ¿quieres ser mi Valentín? 💗</h1>
+  <p>Advertencia: el botón “No” está sujeto a leyes físicas inesperadas.</p>
 
-      <div class="result" id="result">YAYYYYY! 💘</div>
-      <div class="subresult" id="subresult">
-        Next steps: <b>hug()</b> → <b>kiss()</b> → <b>plan_next_trip()</b>
-      </div>
+  <button id="yes">Sí 🥰</button>
+  <button id="no">No 🙃</button>
 
-      <div class="hint" id="hint">İpucu: “Hayır”a tıklamayı dene 😈</div>
-      <div class="footer">— made with love + a tiny bit of chaos</div>
-
-      <div class="secret" id="secret"></div>
-    </div>
+  <div class="result" id="result">
+    ¡SÍÍÍ! 💘 Ahora oficialmente somos el mejor equipo del mundo.
   </div>
 
+  <div class="secret" id="secret"></div>
+</div>
+
 <script>
-  // ✅ Customize quickly
-  const YOU = "İrem";
-  const PARTNER = "Max";
+const hearts = ["💗","💖","💘","💕","💝","❤️‍🔥"];
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const card = document.getElementById("card");
+const result = document.getElementById("result");
+const secret = document.getElementById("secret");
 
-  const hearts = ["💗","💖","💘","💕","💝","❤️‍🔥"];
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
-  const card = document.getElementById("card");
-  const result = document.getElementById("result");
-  const subresult = document.getElementById("subresult");
-  const hint = document.getElementById("hint");
-  const secret = document.getElementById("secret");
-  document.getElementById("partnerName").textContent = PARTNER;
+function spawnHeart(){
+  const h = document.createElement("div");
+  h.className="heart";
+  h.innerHTML = hearts[Math.floor(Math.random()*hearts.length)];
+  h.style.left = Math.random()*90 + "%";
+  h.style.bottom = "0px";
+  card.appendChild(h);
+  setTimeout(()=>h.remove(),3000);
+}
 
-  function spawnHeart(n=1){
-    for(let i=0;i<n;i++){
-      const h = document.createElement("div");
-      h.className="heart";
-      h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
-      h.style.setProperty("--x", (5 + Math.random()*90) + "%");
-      h.style.setProperty("--s", (14 + Math.random()*18) + "px");
-      h.style.setProperty("--t", (2.6 + Math.random()*2.2).toFixed(2) + "s");
-      card.appendChild(h);
-      setTimeout(()=>h.remove(), 5000);
-    }
+function moveNo(){
+  noBtn.style.position="relative";
+  noBtn.style.left=(Math.random()*200-100)+"px";
+  noBtn.style.top=(Math.random()*100-50)+"px";
+  spawnHeart();
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("click", moveNo);
+
+yesBtn.addEventListener("click", function(){
+  result.style.display="block";
+  secret.style.display="block";
+
+  secret.textContent =
+`// Demostración matemática del amor:
+1) Irem + Max = el mejor equipo
+2) El mejor equipo ⇒ más aventuras + más tranquilidad
+∴ Este San Valentín es oficialmente nuestro. ∎
+
+Siguientes pasos:
+abrazo() → beso() → planear_próximo_viaje()`;
+
+  for(let i=0;i<30;i++){
+    setTimeout(spawnHeart, i*80);
   }
 
-  function moveNo(){
-    const dx = (Math.random()*260 - 130);
-    const dy = (Math.random()*160 - 80);
-    noBtn.style.transform = `translate(${dx}px, ${dy}px)`;
-    spawnHeart(2);
-  }
-
-  // Desktop: hover kaçır
-  noBtn.addEventListener("mouseenter", moveNo);
-
-  // Mobile: dokununca kaçır
-  noBtn.addEventListener("touchstart", (e)=>{
-    e.preventDefault();
-    moveNo();
-  }, {passive:false});
-
-  // If they manage to click "No": still do chaos
-  noBtn.addEventListener("click", moveNo);
-
-  yesBtn.addEventListener("click", ()=>{
-    result.style.display = "block";
-    subresult.style.display = "block";
-    hint.style.display = "none";
-    yesBtn.disabled = true;
-    noBtn.disabled = true;
-
-    // heart burst
-    let i=0;
-    const burst = setInterval(()=>{
-      spawnHeart(2);
-      if(++i>28) clearInterval(burst);
-    }, 70);
-
-    // nerdy easter egg
-    secret.style.display = "block";
-    secret.textContent =
-`// Valentine Proof (sketch):
-// 1) ${YOU} + ${PARTNER} = best team
-// 2) best team ⇒ more adventures + more peace
-// ∴ Valentine's Day is ours. ∎`;
-  });
+  yesBtn.disabled=true;
+  noBtn.disabled=true;
+});
 </script>
+
 </body>
 </html>
