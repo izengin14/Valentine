@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valentine? 💗</title>
+  <style>
+    :root{
+      --bg1:#fff0f6; --pink:#ff4d6d; --text:#2b2b2b; --muted:#444;
+      --card: rgba(255,255,255,.78);
+    }
+    *{ box-sizing:border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+    body{
+      margin:0; min-height:100vh; display:grid; place-items:center; overflow:hidden;
+      background:
+        radial-gradient(circle at 20% 20%, #ffe3ec, transparent 45%),
+        radial-gradient(circle at 80% 30%, #ffd6e7, transparent 45%),
+        radial-gradient(circle at 40% 80%, #ffdeeb, transparent 45%),
+        var(--bg1);
+    }
+    .wrap{ width:min(760px, 94vw); padding: 18px; }
+    .card{
+      border-radius: 26px; background: var(--card);
+      border:1px solid rgba(255,255,255,.9);
+      box-shadow: 0 18px 46px rgba(0,0,0,.10);
+      backdrop-filter: blur(10px);
+      padding: 26px 22px;
+      position:relative; overflow:hidden;
+      text-align:center;
+    }
+    h1{ margin: 6px 0 6px; font-size: clamp(28px, 4vw, 40px); color:var(--text); }
+    p{ margin: 0 0 16px; color:var(--muted); line-height:1.35; }
+    .btns{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top: 6px; }
+    button{
+      border:0; padding: 14px 18px; border-radius: 16px;
+      font-weight: 800; font-size: 16px; cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+      user-select:none;
+    }
+    #yes{
+      background: var(--pink); color:white;
+      box-shadow: 0 12px 26px rgba(255,77,109,.35);
+    }
+    #yes:hover{ transform: translateY(-2px); }
+    #no{
+      background:#f1f3f5; color:#222;
+      box-shadow: 0 12px 26px rgba(0,0,0,.08);
+      position: relative;
+    }
+    .hint{ font-size: 12.5px; color:#666; margin-top: 12px; }
+    .result{
+      margin-top: 14px; font-size: 22px; font-weight: 900;
+      color:#d6336c; display:none;
+    }
+    .subresult{ margin-top: 8px; color:#444; display:none; }
+    .footer{ margin-top: 12px; font-size: 12.5px; color:#666; }
+
+    .heart{
+      position:absolute; bottom:-30px; left: var(--x);
+      font-size: var(--s); opacity:0;
+      animation: floatUp var(--t) linear forwards;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,.14));
+      pointer-events:none;
+    }
+    @keyframes floatUp{
+      0%{ transform: translateY(0) scale(.9); opacity: 0; }
+      10%{ opacity: .95; }
+      100%{ transform: translateY(-120vh) scale(1.2); opacity: 0; }
+    }
+
+    .secret{
+      margin-top: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono";
+      font-size: 12.5px;
+      color:#555;
+      background: rgba(0,0,0,.03);
+      border: 1px dashed rgba(0,0,0,.10);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display:none;
+      text-align:left;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" id="card">
+      <h1><span id="partnerName">Max</span>, sevgilim olur musun? 💗</h1>
+      <p>Uyarı: “Hayır” seçeneği beklenmedik fizik kurallarına tabidir.</p>
+
+      <div class="btns" id="btns">
+        <button id="yes">Evet 🥰</button>
+        <button id="no">Hayır 🙃</button>
+      </div>
+
+      <div class="result" id="result">YAYYYYY! 💘</div>
+      <div class="subresult" id="subresult">
+        Next steps: <b>hug()</b> → <b>kiss()</b> → <b>plan_next_trip()</b>
+      </div>
+
+      <div class="hint" id="hint">İpucu: “Hayır”a tıklamayı dene 😈</div>
+      <div class="footer">— made with love + a tiny bit of chaos</div>
+
+      <div class="secret" id="secret"></div>
+    </div>
+  </div>
+
+<script>
+  // ✅ Customize quickly
+  const YOU = "İrem";
+  const PARTNER = "Max";
+
+  const hearts = ["💗","💖","💘","💕","💝","❤️‍🔥"];
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const card = document.getElementById("card");
+  const result = document.getElementById("result");
+  const subresult = document.getElementById("subresult");
+  const hint = document.getElementById("hint");
+  const secret = document.getElementById("secret");
+  document.getElementById("partnerName").textContent = PARTNER;
+
+  function spawnHeart(n=1){
+    for(let i=0;i<n;i++){
+      const h = document.createElement("div");
+      h.className="heart";
+      h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+      h.style.setProperty("--x", (5 + Math.random()*90) + "%");
+      h.style.setProperty("--s", (14 + Math.random()*18) + "px");
+      h.style.setProperty("--t", (2.6 + Math.random()*2.2).toFixed(2) + "s");
+      card.appendChild(h);
+      setTimeout(()=>h.remove(), 5000);
+    }
+  }
+
+  function moveNo(){
+    const dx = (Math.random()*260 - 130);
+    const dy = (Math.random()*160 - 80);
+    noBtn.style.transform = `translate(${dx}px, ${dy}px)`;
+    spawnHeart(2);
+  }
+
+  // Desktop: hover kaçır
+  noBtn.addEventListener("mouseenter", moveNo);
+
+  // Mobile: dokununca kaçır
+  noBtn.addEventListener("touchstart", (e)=>{
+    e.preventDefault();
+    moveNo();
+  }, {passive:false});
+
+  // If they manage to click "No": still do chaos
+  noBtn.addEventListener("click", moveNo);
+
+  yesBtn.addEventListener("click", ()=>{
+    result.style.display = "block";
+    subresult.style.display = "block";
+    hint.style.display = "none";
+    yesBtn.disabled = true;
+    noBtn.disabled = true;
+
+    // heart burst
+    let i=0;
+    const burst = setInterval(()=>{
+      spawnHeart(2);
+      if(++i>28) clearInterval(burst);
+    }, 70);
+
+    // nerdy easter egg
+    secret.style.display = "block";
+    secret.textContent =
+`// Valentine Proof (sketch):
+// 1) ${YOU} + ${PARTNER} = best team
+// 2) best team ⇒ more adventures + more peace
+// ∴ Valentine's Day is ours. ∎`;
+  });
+</script>
+</body>
+</html>
